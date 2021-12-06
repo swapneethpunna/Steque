@@ -30,12 +30,18 @@ import java.util.NoSuchElementException;
  *
  */
 public class Steque<Item> implements Iterable<Item> {
-
+    private Item[] a;
+    private int n;
+    private int first;
+    private static int incapacity=10;
 
     /**
      * constructs a steque object.
      */
     public Steque() {
+        a=(Item[]) new Object[incapacity];
+        n=0;
+        first=0;
 
     }
     
@@ -45,8 +51,24 @@ public class Steque<Item> implements Iterable<Item> {
      * @param item Item to be inserted.
      */
     public void enqueue(Item item) {
-
+        if(item==null)
+        throw new IllegalArgumentException();
+    if(n>=a.length)
+        resize(2*a.length);
+        for(int i=a.length-1;i>0;i--)
+            a[i]=a[i-1];
+            a[0]=item;
+            n++;
+}
+private void resize(int capacity){
+    Item temp[]=(Item[]) new Object[capacity];
+    for(int k=0;k<a.length;k++){
+        temp[k]=a[k];
     }
+    a=temp;
+}
+
+
     
     
     /**
