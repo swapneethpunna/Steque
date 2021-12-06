@@ -102,6 +102,7 @@ private void resize(int capacity){
      * @return true if steque is empty, false otherwise.
      */
     public boolean isEmpty() {
+        return n==0;
 
     }
     
