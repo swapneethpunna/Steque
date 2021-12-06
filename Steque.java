@@ -111,15 +111,43 @@ private void resize(int capacity){
      * @return size as integer.
      */
     public int size() {
-
+        return n;
     }
-    
+   
     /**
-     * returns an iterator over the elements 
+     * returns an iterator over the elements
      * stored in steque.
-     * 
+     *
      */
-    public Iterator<Item> iterator() {
-
+    ////Time complexity:O(1) Space Complexity:0
+    public Iterator<Item> iterator()
+    {
+        return new ArrayIterator();
     }
+    public class ArrayIterator implements Iterator<Item>
+    {
+        public int i = n-1;
+        @Override
+        public boolean hasNext(){
+            return i >= 0;
+    }
+    @Override
+    public void remove()
+    {
+        throw new UnsupportedOperationException();
+    }
+    @Override
+    public Item next()
+    {
+        if(!hasNext())
+            throw new NoSuchElementException();
+        Item item = a[i];
+        i--;
+        return item;
+    }
+}
+public static void main(String[] args)
+{
+    Steque<Integer> s = new Steque<Integer>();
+}
 }
