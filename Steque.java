@@ -30,12 +30,18 @@ import java.util.NoSuchElementException;
  *
  */
 public class Steque<Item> implements Iterable<Item> {
-
+    private Item[] a;
+    private int n;
+    private int first;
+    private static int incapacity=10;
 
     /**
      * constructs a steque object.
      */
     public Steque() {
+        a=(Item[]) new Object[incapacity];
+        n=0;
+        first=0;
 
     }
     
@@ -45,8 +51,24 @@ public class Steque<Item> implements Iterable<Item> {
      * @param item Item to be inserted.
      */
     public void enqueue(Item item) {
-
+        if(item==null)
+        throw new IllegalArgumentException();
+    if(n>=a.length)
+        resize(2*a.length);
+        for(int i=a.length-1;i>0;i--)
+            a[i]=a[i-1];
+            a[0]=item;
+            n++;
+}
+private void resize(int capacity){
+    Item temp[]=(Item[]) new Object[capacity];
+    for(int k=0;k<a.length;k++){
+        temp[k]=a[k];
     }
+    a=temp;
+}
+
+
     
     
     /**
@@ -54,7 +76,12 @@ public class Steque<Item> implements Iterable<Item> {
      * @param item Item to be inserted.
      */
     public void push(Item item) {
-
+    if(item==null)
+        throw new IllegalArgumentException();
+    if(n>=a.length)
+        resize(2*a.length);
+        a[n]=item;
+        n++;
     }
     
     /**
@@ -62,7 +89,12 @@ public class Steque<Item> implements Iterable<Item> {
      * @return Item object from steque.
      */
     public Item pop() {
-
+    if(isEmpty())
+        throw new NoSuchElementException();
+    Item item=a[n-1];
+    a[n-1]=null;
+    n--;
+    return item;
     }
     
     /**
@@ -70,6 +102,7 @@ public class Steque<Item> implements Iterable<Item> {
      * @return true if steque is empty, false otherwise.
      */
     public boolean isEmpty() {
+        return n==0;
 
     }
     
@@ -78,15 +111,43 @@ public class Steque<Item> implements Iterable<Item> {
      * @return size as integer.
      */
     public int size() {
-
+        return n;
     }
-    
+   
     /**
-     * returns an iterator over the elements 
+     * returns an iterator over the elements
      * stored in steque.
-     * 
+     *
      */
-    public Iterator<Item> iterator() {
-
+    ////Time complexity:O(1) Space Complexity:0
+    public Iterator<Item> iterator()
+    {
+        return new ArrayIterator();
     }
+    public class ArrayIterator implements Iterator<Item>
+    {
+        public int i = n-1;
+        @Override
+        public boolean hasNext(){
+            return i >= 0;
+    }
+    @Override
+    public void remove()
+    {
+        throw new UnsupportedOperationException();
+    }
+    @Override
+    public Item next()
+    {
+        if(!hasNext())
+            throw new NoSuchElementException();
+        Item item = a[i];
+        i--;
+        return item;
+    }
+}
+public static void main(String[] args)
+{
+    Steque<Integer> s = new Steque<Integer>();
+}
 }
