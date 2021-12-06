@@ -89,7 +89,12 @@ private void resize(int capacity){
      * @return Item object from steque.
      */
     public Item pop() {
-
+    if(isEmpty())
+        throw new NoSuchElementException();
+    Item item=a[n-1];
+    a[n-1]=null;
+    n--;
+    return item;
     }
     
     /**
